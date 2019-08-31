@@ -1,0 +1,41 @@
+A)
+Departamento- Código*, nome
+funcionário- Matrícula* , nome, salario.
+
+B)
+Endereço- logradouro, número, CEP, uf, cidade
+Pessoa- ID*, nome, sexo, CPF, inscrição, CNPJ
+
+c)
+Banco- cod_banco*, nome
+Agência- Cod_agencia, nome
+Empresta- cod_agencia, valor_parcela, taxa_juros, CPF*
+Cliente- CPF*, nome, data_nasc
+
+d)
+produto- id_produto, nome
+fornecedor-id_fornecedor, nome
+fornece- data, qtde, id_produto, id_fornecedor, id_consumidor
+consumidor-id_consumidor, nome
+
+e)
+aluno- matricula*, nome
+turma- numero*, sala
+professor- matricula*, nome, titulo
+
+f)
+Cliente- CPF*, nome
+Financiamento- numero*, data, valor, prazo
+Veiculo- renavam*, valor, ano, num_eixos, carg_max, num_port, tamanho
+
+g)
+
+autor- email*,nome
+livro- isbn*, titulo
+exemplar- numero*, data_aquisiçao
+editora- CNPJ* , nome
+
+h)
+Paciente- CPF*, nome, telefone
+Consulta- data
+Medico- CRM*, nome, especialidade
