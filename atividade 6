@@ -1,0 +1,135 @@
+a) CRIAR TABELA gerente (
+
+  numero_gerente INT NÃO NULL PRIMARY KEY,
+  nome_gerente VARCHAR (100) NÃO NULL
+);
+
+CRIAR TABELA projeto (
+  numero_projeto INT NÃO CHAVE PRIMÁRIA,
+  nome_projeto VARCHAR (100) NÃO NULL,
+  data_inicio_projeto DATE,
+  numero_gerente INT NÃO NULL REFERENCES gerente (numero_gerente)
+);
+
+CRIAR TABELA departamento (
+  numero_depto INT NÃO CHAVE PRIMÁRIA,
+  nome_depto VARCHAR (100) NÃO NULL
+);
+
+CRIAR TABELA empregado (
+  numero_empregado INT NÃO NULL PRIMARY KEY,
+  nome_empregado VARCHAR (100) NÃO NULL,
+  numero_depto INT REFERENCES departamento (numero_depto)
+);
+
+CREATE TABLE projeto_empregado (
+  numero_projeto INT NÃO NULL,
+  numero_empregado INT NÃO NULL,
+  CHAVE PRIMÁRIA (numero_projeto, numero_empregado),
+  CHAVE ESTRANGEIRA (numero_projeto) REFERÊNCIAS projeto (numero_projeto),
+  CHAVE ESTRANGEIRA (numero_empregado) REFERÊNCIAS empregado (numero_empregado),
+  horas_trabalhadas_projeto SMALLINT DEFAULT 0
+);
+
+b)
+
+CRIAR TABELA forncedor (
+  cod_fornecedor INT NÃO NULL AUTO_INCREMENT PRIMARY KEY,
+  nom_fornecedor VARCHAR (100) NÃO NULL,
+  end_fornecedor VARCHAR (100)
+);
+
+CREATE TABLE pedido (
+  cod_pedido INT NÃO NULL AUTO_INCREMENT PRIMARY KEY,
+  dat_emissao DATA NÃO NULL,
+  cod_fornecedor INT NÃO NULL REFERENCES FORNECEDOR (cod_fornecedor),
+  vlr_total_pedido DECIMAL (12,2) PADRÃO 0
+);
+
+CRIAR TABELA material (
+  cod_material INT NÃO NULL AUTO_INCREMENT PRIMARY KEY,
+  dsc_material VARCHAR (100) NÃO NULL,
+  vlr_unitario DECIMAL (12,2) NÃO NULL
+);
+
+CREATE TABLE pedido_material (
+  cod_pedido INT NÃO NULL,
+  cod_material INT NÃO NULL,
+  CHAVE PRIMÁRIA (cod_pedido, cod_material),
+  CHAVE ESTRANGEIRA (cod_pedido) REFERÊNCIAS pedido (cod_pedido),
+  CHAVE ESTRANGEIRA (cod_material) REFERÊNCIAS material (cod_material),
+  qtde_material SMALLINT NOT NULL CHECK (qtde_material> 0),
+  vlr_material DECIMAL (12,2) NÃO NULL
+);
+c)
+
+CRIAR TABELA curso (
+  id_curso INT PRIMARY KEY,
+  nome_curso VARCHAR (100) NÃO NULL,
+  carga_horaria SMALLINT
+);
+
+CREATE TABLE aluno (
+  id_aluno INT NÃO NULL CHAVE PRIMÁRIA,
+  nome_aluno VARCHAR (100) NÃO NULL,
+  email_aluno VARCHAR (100),
+  fone_contato CHAR (14)
+);
+
+CRIAR TABELA turma (
+  id_turma INT NÃO CHAVE PRIMÁRIA NULA,
+  data_matricula DATE NOT NULL,
+  id_aluno INT NÃO NULL REFERENCES aluno (id_aluno),
+  id_curso INT NÃO NULL REFERÊNCIAS curso (id_curso)
+);
+d)
+
+CRIAR TABELA especialidade (
+  cod_especialidade INT NÃO NULL CHAVE PRIMÁRIA,
+  dsc_especialidade VARCHAR (100) NÃO NULL
+);
+
+CREATE TABLE medico (
+  cod_medico INT PRIMARY KEY,
+  nome_medico VARCHAR (100) NÃO NULL,
+  cod_especialidade INT NÃO NULL REFERÊNCIAS especialidade (cod_especialidade)
+);
+
+CRIAR TABELA paciente (
+  id_paciente INT NÃO NULL CHAVE PRIMÁRIA,
+  nome_paciente VARCHAR (100) NÃO NULL
+);
+
+Consulta CREATE TABLE (
+  id_consulta INT NÃO NULL CHAVE PRIMÁRIA,
+  id_medico INT NÃO NULL REFERENCES medico (id_medico),
+  id_paciente INT NÃO NULL REFERÊNCIAS paciente (id_paciente),
+  data_consulta DATA NÃO NULA
+);
+e)
+
+CREATE TABLE editora (
+  cod_editora INT NÃO NULL CHAVE PRIMÁRIA,
+  nom_editora VARCHAR (100) NÃO NULL
+);
+
+CRIAR TABELA livro (
+  id_livro INT PRIMARY KEY,
+  num_isbn CHAR (13) NÃO NULL ÚNICO,
+  tit_livro VARCHAR (100) NÃO NULL,
+  num_paginas SMALLINT CHECK (num_paginas> 0),
+  cod_editora INT NÃO NULL REFERENCES editora (cod_editora)
+);  
+
+CREATE TABLE aluno (
+  id_aluno INT NÃO NULL CHAVE PRIMÁRIA,
+  num_matricula INT NÃO NULL ÚNICO,
+  nom_aluno VARCHAR (100) NÃO NULL
+);
+CREATE TABLE emprestimo (
+  id_emprestimo INT NÃO NULL CHAVE PRIMÁRIA,
+  id_livro INT NÃO NULL REFERÊNCIAS livro (id_livro),
+  id_aluno INT NÃO NULL REFERENCES aluno (id_aluno),
+  dat_emprestimo DATE NOT NULL,
+  dat_devolucao DATE
+);
