@@ -1,0 +1,105 @@
+a)
+# Consulta OK, 0 linhas afetadas (0,01 s)
+
+b)
+INSERIR NO ALUNO (id_aluno) VALORES (1);
+# ERRO 1364 (HY000): O campo 'nome_aluno' não tem um valor padrão
+
+c)
+INSIRA DENTRO DE
+  aluno (id_aluno, nome_aluno)
+VALORES
+  (1, «JOSE»),
+  (2, «MARCELA»),
+  (3, «LUCAS»),
+  (4, «CARLOS»),
+  (5, 'PEDRÃO');  
+# Consulta OK, 5 linhas afetadas (0,00 s)
+# Registros: 5 Duplicados: 0 Avisos: 0
+
+d)
+INSIRA DENTRO DE
+  disciplina (id_disciplina, nome_disciplina, carga_horaria)
+VALORES
+  (1, «BANCO DE DADOS I», -1);  
+# ERRO 3819 (HY000): verifique se a restrição 'disciplina_chk_1' está violada.
+
+e)
+INSIRA DENTRO DE
+  disciplina (id_disciplina, nome_disciplina, carga_horaria)
+VALORES
+  (1, «BANCO DE DADOS I», 60),
+  (2, «BANCO DE DADOS II», 60);  
+# Consulta OK, 2 linhas afetadas (0,00 s)
+# Registros: 2 Duplicados: 0 Avisos: 0
+
+f)
+INSIRA DENTRO DE
+  professor (id_professor, nome_professor)
+VALORES
+  (1, «LETICIA»),
+  (2, «JOSE REGINALDO»);  
+# Consulta OK, 2 linhas afetadas (0,01 s)
+# Registros: 2 Duplicados: 0 Avisos: 0
+
+g)
+INSERT INTO turma (id_turma, num_periodo) VALUES (1, 20192);
+# Consulta OK, 1 linha afetada (0,01 s)
+
+h)
+INSERIR EM TURMA (id_turma, num_periodo) VALUES (1, 20201);
+# ERRO 1062 (23000): entrada duplicada '1' para a chave 'PRIMARY'
+
+i)
+INSERIR EM turma (id_turma, num_periodo, id_professor) VALUES (2, 20201, 3);
+# ERRO 1452 (23000): Não é possível adicionar ou atualizar uma linha filho: uma restrição de chave estrangeira falha (academico`.`turma`, CONSTRAINT `turma_ibfk_1` FOREIGN KEY (` id_professor`) REFERÊNCIAS `professor` (` id_professor`) ON EXCLUIR CASCADE)
+
+j)
+INSIRA DENTRO DE
+  turma (id_turma, num_periodo, id_professor, id_disciplina)
+VALORES
+  (3, 20201, 1, 1),
+  (4, 20202, 2, 2);
+# Consulta OK, 2 linhas afetadas (0,00 s)
+# Registros: 2 Duplicados: 0 Avisos: 0
+
+k)
+INSIRA DENTRO DE
+  histórico (id_historico, id_turma, id_aluno)
+VALORES
+  (1, 1, 1)
+  (2, 1, 2)
+  (3, 1, 3)
+  (4, 1, 4)
+  (5, 3, 1)
+  (6, 3, 2)
+  (7, 4, 3)
+  (8, 4, 4);
+# Consulta OK, 8 linhas afetadas (0,00 s)
+# Registros: 8 Duplicados: 0 Avisos: 0
+
+l)
+UPDATE aluno SET nome_aluno = 'JOAO' WHERE nome_aluno = 'JOSE';
+# Consulta OK, 1 linha afetada (0,00 s)
+# Linhas correspondidas: 1 Alteradas: 1 Avisos: 0
+
+m)
+UPDATE disciplina SET id_disciplina = 3 WHERE nome_disciplina = 'BANCO DE DADOS I';
+# ERRO 1451 (23000): Não é possível excluir ou atualizar uma linha pai: uma restrição de chave estrangeira falha (`academico`.`turma`, CONSTRAINT` turma_ibfk_2` FOREIGN KEY (`id_disciplina`) REFERÊNCIAS` disciplina` (`id_disciplina`))
+
+n)
+UPDATE histórico SET media_final = 5 WHERE id_turma = 4;
+# Consulta OK, 2 linhas afetadas (0,00 s)
+# Linhas correspondidas: 2 Alteradas: 2 Avisos: 0
+
+o)
+DELETE FROM aluno WHERE nome_aluno = 'PEDRO';
+# Consulta OK, 1 linha afetada (0,01 s)
+
+p)
+EXCLUIR DA disciplina WHERE nome_disciplina = 'BANCO DE DADOS II';
+# ERRO 1451 (23000): Não é possível excluir ou atualizar uma linha pai: uma restrição de chave estrangeira falha (`academico`.`turma`, CONSTRAINT` turma_ibfk_2` FOREIGN KEY (`id_disciplina`) REFERÊNCIAS` disciplina` (`id_disciplina`))
+
+q)
+EXCLUIR DO professor WHERE nome_professor = 'JOSE REGINALDO';
+# Consulta OK, 1 linha afetada (0,00 s)
